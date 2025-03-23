@@ -1,0 +1,12 @@
+services:
+  ai-api:    
+    image: bridzinppp/${IMAGE_NAME}:${IMAGE_TAG}
+    build:
+      args:
+      - IMAGE_NAME
+      - IMAGE_TAG
+      context: .
+      dockerfile: ./src/ai-api/Dockerfile      
+      tags:
+      - bridzinppp/${IMAGE_NAME}:${GIT_COMMIT}
+      - bridzinppp/${IMAGE_NAME}:latest
