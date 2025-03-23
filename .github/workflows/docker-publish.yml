@@ -15,7 +15,7 @@ on:
         description: 'tag'
         required: true
 env:  
-  REGISTRY: hub.docker.com
+  REGISTRY: https://hub.docker.com/repositories/bridzinppp
   GIT_COMMIT: ${{ github.sha }}
   IMAGE_NAME: ${{ github.event.inputs.image-name }}
   IMAGE_TAG: ${{ github.event.inputs.tag }}
