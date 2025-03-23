@@ -1,2 +1,2 @@
-# ai-project
-Test ai project
+# Test AI project
+This is test project.
