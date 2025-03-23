@@ -1,13 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{15848FF1-15E4-47FB-8195-67193325CD94}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ai-api", "src\api\ai-api\ai-api.csproj", "{026448CF-E92C-4DE4-B68E-FBA638419922}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ai-api", "src\ai-api\ai-api.csproj", "{026448CF-E92C-4DE4-B68E-FBA638419922}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +22,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{15848FF1-15E4-47FB-8195-67193325CD94} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{026448CF-E92C-4DE4-B68E-FBA638419922} = {15848FF1-15E4-47FB-8195-67193325CD94}
+		{026448CF-E92C-4DE4-B68E-FBA638419922} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B6DB73D9-65F1-4A40-A628-C73F4EE3C1D2}
