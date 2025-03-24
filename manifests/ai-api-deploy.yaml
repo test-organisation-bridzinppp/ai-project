@@ -21,8 +21,8 @@ spec:
         fsGroup: 1000
         runAsNonRoot: true                
       containers:
-      - image: bridzinppp/ai-api:0.0.1
-        name: ai-api
+      - image: bridzinppp/ai-api:0.0.3
+        name: ai-api        
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
