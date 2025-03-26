@@ -15,6 +15,11 @@ spec:
       labels:
         app: ai-api
     spec:
+      volumes:
+      - name: ai-storage
+        persistentVolumeClaim:
+          claimName: ai-storage-pvc
+      serviceAccountName: ai-api-sa
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
@@ -23,6 +28,9 @@ spec:
       containers:
       - image: bridzinppp/ai-api:0.0.3
         name: ai-api        
+        volumeMounts:
+        - name: ai-storage
+          mountPath: /mnt/ai-storage
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
