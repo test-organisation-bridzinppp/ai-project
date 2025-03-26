@@ -3,16 +3,12 @@ name: docker build and publish
 on:
   workflow_dispatch:
     inputs:
-      image-name:
-        description: 'name'
-        required: true        
       tag:
         description: 'tag'
         required: true
 env:  
   REGISTRY: https://hub.docker.com/repositories/bridzinppp
-  GIT_COMMIT: ${{ github.sha }}
-  IMAGE_NAME: ${{ github.event.inputs.image-name }}
+  GIT_COMMIT: ${{ github.sha }}  
   IMAGE_TAG: ${{ github.event.inputs.tag }}
 jobs:
   build:

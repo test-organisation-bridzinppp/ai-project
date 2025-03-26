@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:  
+  name: worker-job
+  namespace: ai
+spec:
+  jobTemplate:
+    metadata:      
+      name: worker-job
+    spec:
+      activeDeadlineSeconds: 600 # 10 minutes of continous running before terminate
+      backoffLimit: 3
+      completions: 1
+      parallelism: 1      
+      template:
+        metadata:                  
+        spec: 
+          volumes:
+          - name: ai-storage
+            persistentVolumeClaim:
+              claimName: ai-storage-pvc
+          serviceAccountName: worker-job-sa
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            runAsNonRoot: true
+          containers:
+          - image: bridzinppp/worker-job
+            name: worker-job
+            volumeMounts:
+            - name: ai-storage
+              mountPath: /mnt/ai-storage
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 1000
+            resources: 
+              limits:
+                cpu: 250m
+                memory: 512Mi
+              requests:
+                cpu: 125m
+                memory: 256Mi
+          restartPolicy: Never          
+  schedule: '*/1 * * * *'
+status: {}

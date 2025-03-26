@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: app-role-binding
+  namespace: ai
+subjects:
+- kind: ServiceAccount
+  name: ai-api-sa  
+  apiGroup: ""
+- kind: ServiceAccount
+  name: worker-job-sa  
+  apiGroup: ""
+roleRef:  
+  kind: Role 
+  name: app-role
+  apiGroup: rbac.authorization.k8s.io
