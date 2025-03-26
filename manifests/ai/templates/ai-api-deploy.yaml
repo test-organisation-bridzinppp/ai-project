@@ -6,7 +6,7 @@ metadata:
   name: ai-api
   namespace: ai
 spec:
-  replicas: 2
+  replicas: {{ .Values.ai-api.replicaCount }}
   selector:
     matchLabels:
       app: ai-api  
