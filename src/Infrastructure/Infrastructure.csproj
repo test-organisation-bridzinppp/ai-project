@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.44.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlocks.Application\BuildingBlocks.Application.csproj" />
+  </ItemGroup>
+
 </Project>
