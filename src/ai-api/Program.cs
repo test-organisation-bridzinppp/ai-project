@@ -1,4 +1,7 @@
+using BuildingBlocks.Application.Ports;
+using Infrastructure;
 using Microsoft.SemanticKernel;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -15,23 +18,25 @@ ValidateConfiguration(openAiApiKey, nameof(openAiApiKey));
 ValidateConfiguration(openAiEndpoint, nameof(openAiEndpoint));
 ValidateConfiguration(openAiModel, nameof(openAiModel));
 ValidateConfiguration(openAiDeploymentName, nameof(openAiDeploymentName));
+//ITextEmbeddingGenerationService
 
 builder.Services.AddSingleton(sp =>
 {
     var kernel = Kernel
         .CreateBuilder()
         .AddAzureOpenAIChatCompletion(
-            deploymentName: "NAME_OF_YOUR_DEPLOYMENT",
-            apiKey: "YOUR_API_KEY",
-            endpoint: "YOUR_AZURE_ENDPOINT",
-            modelId: "gpt-4")
+            deploymentName: openAiDeploymentName!,
+            apiKey: openAiApiKey!,
+            endpoint: openAiEndpoint!,
+            modelId: openAiModel)
         .Build();
     return kernel;
 });
 
-var app = builder.Build();
+builder.Services.AddSingleton<IChatCompletionProvider, OpenApiChatCompletionProvider>();
+builder.Services.AddApplicationServices();
 
-// Configure the HTTP request pipeline
+var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

@@ -5,7 +5,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 namespace Infrastructure
 {
     public class OpenApiChatCompletionProvider : IChatCompletionProvider
-    {
+    {        
         private readonly IChatCompletionService _chatCompletionService;
         private ChatHistory _chatHistory = new ChatHistory();
         private readonly Kernel _kernel;
@@ -16,11 +16,12 @@ namespace Infrastructure
             _kernel = kernel;
         }
         public async Task<string> CompleteChatAsync(string prompt)
-        {
+        {            
             _chatHistory.AddUserMessage(prompt);
             var response = await _chatCompletionService.GetChatMessageContentAsync(
                 chatHistory: _chatHistory,                
                 kernel: _kernel);
+
             if (response.Content == null)
             {
                 return string.Empty;
