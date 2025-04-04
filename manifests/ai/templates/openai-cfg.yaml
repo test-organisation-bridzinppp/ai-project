@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: openai-cfg
+  namespace: ai
+data:
+  AzureOpenAIEndpoint: {{ .Values.openai.endpoint | quote }}
+  AzureOpenAIModel: {{ .Values.openai.model | quote }}
+  AzureOpenAIDeploymentName: {{ .Values.openai.deploymentname | quote }}
