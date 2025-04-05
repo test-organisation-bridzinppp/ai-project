@@ -1,6 +1,13 @@
-ai-api:
+aiapi:
   replicaCount: 1
+  image: bridzinppp/ai-api:0.0.4
 worker:
 
 azure:
   azurestorageaccountkey: ""
+
+openai:
+  endpoint: "https://eastus.api.cognitive.microsoft.com/"
+  model: "gpt-4o-mini"
+  deploymentname: "openai-deployment"
+  apikey: ""

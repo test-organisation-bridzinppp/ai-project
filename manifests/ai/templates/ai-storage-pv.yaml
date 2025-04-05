@@ -3,7 +3,10 @@ kind: PersistentVolume
 metadata:
   name: ai-storage-pv
   namespace: ai
+  labels:
+    app: ai-storage-pv
 spec:
+  storageClassName: ""
   capacity:
     storage: 1Gi
   accessModes:

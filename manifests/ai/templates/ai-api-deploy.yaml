@@ -6,7 +6,7 @@ metadata:
   name: ai-api
   namespace: ai
 spec:
-  replicas: {{ .Values.ai-api.replicaCount }}
+  replicas: {{ .Values.aiapi.replicaCount }}
   selector:
     matchLabels:
       app: ai-api  
@@ -15,7 +15,7 @@ spec:
       labels:
         app: ai-api
     spec:
-      volumes:
+      volumes:      
       - name: ai-storage
         persistentVolumeClaim:
           claimName: ai-storage-pvc
@@ -26,7 +26,28 @@ spec:
         fsGroup: 1000
         runAsNonRoot: true                
       containers:
-      - image: bridzinppp/ai-api:0.0.3
+      - image: {{ .Values.aiapi.image }}
+        env:
+        - name: AzureOpenAI__ApiKey
+          valueFrom:
+            secretKeyRef:
+              name: openai-secret
+              key: AzureOpenAIKey
+        - name: AzureOpenAI__Endpoint        
+          valueFrom:
+            configMapKeyRef:
+              name: openai-cfg
+              key: AzureOpenAIEndpoint
+        - name: AzureOpenAI__Model
+          valueFrom:
+            configMapKeyRef:
+              name: openai-cfg
+              key: AzureOpenAIModel
+        - name: AzureOpenAI__DeploymentName
+          valueFrom:
+            configMapKeyRef:
+              name: openai-cfg
+              key: AzureOpenAIDeploymentName
         name: ai-api        
         volumeMounts:
         - name: ai-storage
