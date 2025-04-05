@@ -8,6 +8,6 @@ azure:
 
 openai:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
-  model: "gpt-4"
-  deploymentname: "gpt-4"
+  model: "gpt-4o-mini"
+  deploymentname: "openai-deployment"
   apikey: ""

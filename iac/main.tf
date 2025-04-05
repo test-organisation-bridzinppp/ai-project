@@ -53,6 +53,7 @@ module "ai-vision" {
 }
 
 module "ai-search" {
+  count = var.enable_search ? 1 : 0
   depends_on = [ azurerm_resource_group.ai-rg ]
   source = "./modules/ai-search"
   resource_group_name = var.rg-name
