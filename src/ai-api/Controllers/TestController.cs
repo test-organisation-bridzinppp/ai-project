@@ -1,4 +1,5 @@
 ﻿using Application.Completions;
+using Application.Embeddings;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,12 @@ namespace ai_api.Controllers
         public async Task<IActionResult> Test(string prompt)
         {
             var response = await _mediator.Send(new TextCompletionQuery(prompt));
+            return Ok(response);
+        }
+
+        public async Task<IActionResult> GetEmbeddings(string text)
+        {
+            var response = await _mediator.Send(new TextEmbeddingQuery(text));
             return Ok(response);
         }
     }
