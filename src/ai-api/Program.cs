@@ -22,6 +22,7 @@ ValidateConfiguration(openAiDeploymentName, nameof(openAiDeploymentName));
 
 builder.Services.AddSingleton(sp =>
 {
+#pragma warning disable SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     var kernel = Kernel
         .CreateBuilder()
         .AddAzureOpenAIChatCompletion(
@@ -29,7 +30,12 @@ builder.Services.AddSingleton(sp =>
             apiKey: openAiApiKey!,
             endpoint: openAiEndpoint!,
             modelId: openAiModel)
+        .AddAzureOpenAITextEmbeddingGeneration(
+            deploymentName: openAiDeploymentName!,
+            apiKey: openAiApiKey!,
+            endpoint: openAiEndpoint!)        
         .Build();
+#pragma warning restore SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     return kernel;
 });
 

@@ -2,6 +2,6 @@
 {
     public interface ITextEmbeddingsProvider
     {
-        IReadOnlyList<float> GetEmbeddings(string text);
+        Task<IReadOnlyList<float>> GetEmbeddings(string text);
     }
 }
