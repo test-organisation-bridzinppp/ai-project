@@ -22,6 +22,8 @@ namespace ai_api.Controllers
             return Ok(response);
         }
 
+
+        [HttpGet("embeddgins")]
         public async Task<IActionResult> GetEmbeddings(string text)
         {
             var response = await _mediator.Send(new TextEmbeddingQuery(text));
