@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Completions
 {
-    class TextCompletionQueryHandler : IRequestHandler<TextCompletionQuery, string>
+    public class TextCompletionQueryHandler : IRequestHandler<TextCompletionQuery, string>
     {
         private readonly IChatCompletionProvider _chatCompletionProvider;
 

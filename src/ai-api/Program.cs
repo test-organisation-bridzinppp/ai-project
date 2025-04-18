@@ -14,6 +14,12 @@ var openAiEndpoint = builder.Configuration["AzureOpenAI:Endpoint"];
 var openAiModel = builder.Configuration["AzureOpenAI:Model"];
 var openAiDeploymentName = builder.Configuration["AzureOpenAI:DeploymentName"];
 
+var openAiEmbeddingsApiKey = builder.Configuration["AzureOpenAIEmbeddings:ApiKey"];
+var openAiEmbeddingsEndpoint = builder.Configuration["AzureOpenAIEmbeddings:Endpoint"];
+var openAiEmbeddingsModel = builder.Configuration["AzureOpenAIEmbeddings:Model"];
+var openAiEmbeddingsDeploymentName = builder.Configuration["AzureOpenAIEmbeddings:DeploymentName"];
+
+
 ValidateConfiguration(openAiApiKey, nameof(openAiApiKey));
 ValidateConfiguration(openAiEndpoint, nameof(openAiEndpoint));
 ValidateConfiguration(openAiModel, nameof(openAiModel));
@@ -31,15 +37,16 @@ builder.Services.AddSingleton(sp =>
             endpoint: openAiEndpoint!,
             modelId: openAiModel)
         .AddAzureOpenAITextEmbeddingGeneration(
-            deploymentName: openAiDeploymentName!,
-            apiKey: openAiApiKey!,
-            endpoint: openAiEndpoint!)        
+            deploymentName: openAiEmbeddingsDeploymentName!,
+            apiKey: openAiEmbeddingsApiKey!,
+            endpoint: openAiEmbeddingsEndpoint!)        
         .Build();
 #pragma warning restore SKEXP0010 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     return kernel;
 });
 
 builder.Services.AddSingleton<IChatCompletionProvider, OpenApiChatCompletionProvider>();
+builder.Services.AddTransient<ITextEmbeddingsProvider, OpenAITextEmbeddingProvider>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();

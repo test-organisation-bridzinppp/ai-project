@@ -18,3 +18,17 @@ resource "azurerm_cognitive_deployment" "open_ai_deployment" {
     version = "2024-07-18"
   }  
 }
+
+resource "azurerm_cognitive_deployment" "text-embedding" {
+  name                 = "openai-text-embedding"
+  cognitive_account_id = azurerm_cognitive_account.open_ai.id
+  sku {
+    name = "Standard"
+  }
+  model {
+    format  = "OpenAI"
+    name    = "text-embedding-ada-002"
+    version = "2"
+  }  
+}
+

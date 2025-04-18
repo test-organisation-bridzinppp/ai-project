@@ -3,7 +3,8 @@ using MediatR;
 
 namespace Application.Embeddings
 {
-    public class TextEmbeddingQueryHandler : IRequest<TextEmbeddingQuery>
+
+    public class TextEmbeddingQueryHandler : IRequestHandler<TextEmbeddingQuery, IReadOnlyList<float>>
     {
         private readonly ITextEmbeddingsProvider _textEmbeddingsProvider;
 

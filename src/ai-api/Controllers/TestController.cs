@@ -22,7 +22,6 @@ namespace ai_api.Controllers
             return Ok(response);
         }
 
-
         [HttpGet("embeddgins")]
         public async Task<IActionResult> GetEmbeddings(string text)
         {

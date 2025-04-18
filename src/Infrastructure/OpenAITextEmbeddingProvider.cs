@@ -1,17 +1,21 @@
 ﻿using BuildingBlocks.Application.Ports;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Embeddings;
 
 namespace Infrastructure
 {
-    class OpenAITextEmbeddingProvider : ITextEmbeddingsProvider
+
+    public class OpenAITextEmbeddingProvider : ITextEmbeddingsProvider
     {
         
 #pragma warning disable SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private readonly ITextEmbeddingGenerationService _textEmbeddingGenerationService;
-        public OpenAITextEmbeddingProvider(ITextEmbeddingGenerationService textEmbeddingGenerationService)
+       
+        public OpenAITextEmbeddingProvider(Kernel kernel)
         {
-            _textEmbeddingGenerationService = textEmbeddingGenerationService;
+            _textEmbeddingGenerationService = kernel.GetRequiredService<ITextEmbeddingGenerationService>();
+
         }
 
 #pragma warning restore SKEXP0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
