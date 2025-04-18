@@ -28,6 +28,26 @@ spec:
       containers:
       - image: {{ .Values.aiapi.image }}
         env:
+        - name: AzureOpenAIEmbeddings__ApiKey
+          valueFrom:
+            secretKeyRef:
+              name: openai-secret
+              key: AzureOpenAIEmbeddingsKey
+        - name: AzureOpenAIEmbeddings__Endpoint
+          valueFrom:
+            configMapKeyRef:
+              name: openai-cfg
+              key: AzureOpenAIEmbeddingsEndpoint
+        - name: AzureOpenAIEmbeddings__Model          
+            valueFrom:
+              configMapKeyRef:
+                name: openai-cfg
+                key: AzureOpenAIEmbeddginsModel
+        - name: AzureOpenAIEmbeddings__DeploymentName
+          valueFrom:
+            configMapKeyRef:
+              name: openai-cfg
+              key: AzureOpenAIEmbeddingsDeploymentName
         - name: AzureOpenAI__ApiKey
           valueFrom:
             secretKeyRef:
