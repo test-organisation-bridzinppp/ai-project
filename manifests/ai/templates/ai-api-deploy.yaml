@@ -38,7 +38,7 @@ spec:
             configMapKeyRef:
               name: openai-cfg
               key: AzureOpenAIEmbeddingsEndpoint
-        - name: AzureOpenAIEmbeddings__Model          
+        - name: AzureOpenAIEmbeddings__Model
           valueFrom:
             configMapKeyRef:
               name: openai-cfg
