@@ -11,7 +11,7 @@ openai:
   model: "gpt-4o-mini"
   deploymentname: "openai-deployment"
   apikey: ""
-openai-embeddings:
+openaiembeddings:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
   model: "text-embedding-ada-002"
   deploymentname: "openai-text-embedding"
