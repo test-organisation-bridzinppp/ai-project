@@ -8,6 +8,6 @@ data:
   AzureOpenAIEndpoint: {{ .Values.openai.endpoint | quote }}
   AzureOpenAIModel: {{ .Values.openai.model | quote }}
   AzureOpenAIDeploymentName: {{ .Values.openai.deploymentname | quote }}
-  AzureOpenAIEmbeddingsEndpoint: {{ .Values.openai-embeddings.endpoint | quote }}
-  AzureOpenAIEmbeddginsModel: {{ .Values.openai-embeddings.model | quote }}
-  AzureOpenAIEmbeddingsDeploymentName: {{ .Values.openai-embeddings.deploymentname | quote }}
+  AzureOpenAIEmbeddingsEndpoint: {{ .Values.openaiembeddings.endpoint | quote }}
+  AzureOpenAIEmbeddingsModel: {{ .Values.openaiembeddings.model | quote }}
+  AzureOpenAIEmbeddingsDeploymentName: {{ .Values.openaiembeddings.deploymentname | quote }}
