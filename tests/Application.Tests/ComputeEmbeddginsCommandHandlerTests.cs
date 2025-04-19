@@ -1,6 +1,5 @@
 using Application.EmbeddingsComputing;
 using BuildingBlocks.Application.Ports;
-using Domain;
 using Moq;
 using Xunit;
 
