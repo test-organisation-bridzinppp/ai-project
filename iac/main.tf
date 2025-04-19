@@ -59,3 +59,10 @@ module "ai-search" {
   resource_group_name = var.rg-name
   location = var.location  
 }
+
+module "ai-document" {
+  depends_on = [ azurerm_resource_group.ai-rg ]
+  source = "./modules/ai-document"
+  resource_group_name = var.rg-name
+  location = var.location  
+}
