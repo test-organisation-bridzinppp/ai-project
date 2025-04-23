@@ -19,6 +19,9 @@ var openAiEmbeddingsEndpoint = builder.Configuration["AzureOpenAIEmbeddings:Endp
 var openAiEmbeddingsModel = builder.Configuration["AzureOpenAIEmbeddings:Model"];
 var openAiEmbeddingsDeploymentName = builder.Configuration["AzureOpenAIEmbeddings:DeploymentName"];
 
+var documentAnalysisApiKey = builder.Configuration["DocumentAnalysis:ApiKey"];
+var documentAnalysisEndpoint = builder.Configuration["DocumentAnalysis:Endpoint"];
+
 
 ValidateConfiguration(openAiApiKey, nameof(openAiApiKey));
 ValidateConfiguration(openAiEndpoint, nameof(openAiEndpoint));
