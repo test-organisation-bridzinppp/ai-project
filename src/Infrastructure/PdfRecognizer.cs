@@ -1,4 +1,8 @@
-﻿using BuildingBlocks.Application.Ports;
+﻿using Azure;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
+using BuildingBlocks.Application.Ports;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 
 namespace Infrastructure
@@ -16,8 +20,12 @@ namespace Infrastructure
 
         public async Task<RecognizedDocument> Recognize(byte[] content)
         {
-            // generate code using Azure Form recognizer
-            return null;
+            var client = new DocumentAnalysisClient(new Uri(_endpoint), new AzureKeyCredential(_apiKey));
+            using var stream = new MemoryStream(content);
+            var operationResult = await client.AnalyzeDocumentAsync(WaitUntil.Completed,"prebuilt-document", stream);
+            var result = operationResult.Value;           
+            var recognizedDocument = new RecognizedDocument(result.Pages.SelectMany(p => p.Lines.Select(l => l.Content)));
+            return recognizedDocument;
         }
     }
 }
