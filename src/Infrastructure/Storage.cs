@@ -2,7 +2,7 @@
 
 namespace Infrastructure
 {
-    class Storage : IStorage
+    public class Storage : IStorage
     {
         public Task<StorageFile> GetFile(string path, string fileName)
         {

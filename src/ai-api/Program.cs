@@ -65,6 +65,7 @@ builder.Services.AddSingleton<IVectorDatabase>(sp =>
     return new VectorDatabase(endpoint, key);
 });
 
+builder.Services.AddTransient<IStorage, Storage>();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
