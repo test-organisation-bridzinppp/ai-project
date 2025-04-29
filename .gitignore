@@ -436,8 +436,8 @@ override.tf.json
 *.tfplan
 
 # Ignore Terraform variable files
-*.tfvars
-*.tfvars.json
+#*.tfvars
+#*.tfvars.json
 
 # Ignore directories created by Terraform
 .terraform/
