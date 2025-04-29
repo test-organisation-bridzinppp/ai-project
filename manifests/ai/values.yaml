@@ -1,6 +1,6 @@
 aiapi:
   replicaCount: 1
-  image: bridzinppp/ai-api:0.0.6
+  image: bridzinppp/ai-api:0.0.7
 worker:
 
 azure:
@@ -16,3 +16,10 @@ openaiembeddings:
   model: "text-embedding-ada-002"
   deploymentname: "openai-text-embedding"
   apikey: ""
+azureAIDocumentAnlysis:
+  endpoint: "https://eastus.api.cognitive.microsoft.com/"
+  apiKey: ""
+azureAISearch:
+  endpoint: "https://eastus.api.cognitive.microsoft.com/"
+  apiKey: ""
+

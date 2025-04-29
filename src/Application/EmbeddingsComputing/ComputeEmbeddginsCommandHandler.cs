@@ -5,19 +5,14 @@ using MediatR;
 
 namespace Application.EmbeddingsComputing
 {
-    public class ComputeEmbeddginsCommandHandler : IRequestHandler<ComputeEmbeddingsCommand, int>
+    public class ComputeEmbeddginsCommandHandler(IStorage storage, IPdfRecognizer pdfRecognizer, ITextEmbeddingsProvider textEmbeddingsProvider, IVectorDatabase vectorDatabase) : IRequestHandler<ComputeEmbeddingsCommand, int>
     {
-        private readonly IStorage _storage;
-        private readonly IPdfRecognizer _pdfRecognizer;
-        private readonly ITextEmbeddingsProvider _textEmbeddingsProvider;
-        private readonly IVectorDatabase _vectorDatabase;
-        public ComputeEmbeddginsCommandHandler(IStorage storage, IPdfRecognizer pdfRecognizer, ITextEmbeddingsProvider textEmbeddingsProvider, IVectorDatabase vectorDatabase)
-        {
-            _storage = storage;
-            _pdfRecognizer = pdfRecognizer;
-            _textEmbeddingsProvider = textEmbeddingsProvider;
-            _vectorDatabase = vectorDatabase;
-        }
+        private readonly IStorage _storage = storage;
+        private readonly IPdfRecognizer _pdfRecognizer = pdfRecognizer;
+        private readonly ITextEmbeddingsProvider _textEmbeddingsProvider = textEmbeddingsProvider;
+        private readonly IVectorDatabase _vectorDatabase = vectorDatabase;
+     
+
         public async Task<int> Handle(ComputeEmbeddingsCommand request, CancellationToken cancellationToken)
         {
             var embeddings = new List<Embedding>();

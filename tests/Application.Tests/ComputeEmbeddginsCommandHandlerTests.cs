@@ -1,5 +1,6 @@
 using Application.EmbeddingsComputing;
 using BuildingBlocks.Application.Ports;
+using Infrastructure;
 using Moq;
 using Xunit;
 
@@ -9,16 +10,19 @@ public class ComputeEmbeddginsCommandHandlerTests
     private readonly Mock<IPdfRecognizer> _pdfRecognizerMock;
     private readonly Mock<ITextEmbeddingsProvider> _textEmbeddingsProviderMock;
     private readonly ComputeEmbeddginsCommandHandler _handler;
+    private readonly Mock<IVectorDatabase> _vectorDatabaseMock;
 
     public ComputeEmbeddginsCommandHandlerTests()
     {
         _storageMock = new Mock<IStorage>();
         _pdfRecognizerMock = new Mock<IPdfRecognizer>();
         _textEmbeddingsProviderMock = new Mock<ITextEmbeddingsProvider>();
+        _vectorDatabaseMock = new Mock<IVectorDatabase>();
         _handler = new ComputeEmbeddginsCommandHandler(
             _storageMock.Object,
             _pdfRecognizerMock.Object,
-            _textEmbeddingsProviderMock.Object
+            _textEmbeddingsProviderMock.Object,
+            _vectorDatabaseMock.Object
         );
     }
 
