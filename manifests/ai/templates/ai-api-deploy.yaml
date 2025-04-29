@@ -68,6 +68,26 @@ spec:
             configMapKeyRef:
               name: openai-cfg
               key: AzureOpenAIDeploymentName
+        - name: AzureAISearch_Endpoint
+          valueFrom:
+            configMapKeyRef:
+              name: azureai-cfg
+              key: AzureAiSearchEndpoint
+        - name: AzureAISearch__ApiKey
+          valueFrom:
+            secretKeyRef:
+              name: azureai-secret
+              key: AzureAISearchKey
+        - name: AzureAIDocumentAnalysis__Endpoint
+          valueFrom:
+            configMapKeyRef:
+              name: azureai-cfg
+              key: AzureAiDocumentAnalysisEndpoint
+        - name: AzureAIDocumentAnalysis__ApiKey        
+          valueFrom:
+            secretKeyRef:
+              name: azureai-secret
+              key: DocumentAnalysisKey
         name: ai-api        
         volumeMounts:
         - name: ai-storage

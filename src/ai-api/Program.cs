@@ -20,8 +20,8 @@ var openAiEmbeddingsEndpoint = builder.Configuration["AzureOpenAIEmbeddings:Endp
 var openAiEmbeddingsModel = builder.Configuration["AzureOpenAIEmbeddings:Model"];
 var openAiEmbeddingsDeploymentName = builder.Configuration["AzureOpenAIEmbeddings:DeploymentName"];
 
-var documentAnalysisApiKey = builder.Configuration["DocumentAnalysis:ApiKey"];
-var documentAnalysisEndpoint = builder.Configuration["DocumentAnalysis:Endpoint"];
+var documentAnalysisApiKey = builder.Configuration["AzureAIDocumentAnalysis:ApiKey"];
+var documentAnalysisEndpoint = builder.Configuration["AzureAIDocumentAnalysis:Endpoint"];
 
 var azureAISearchApiKey = builder.Configuration["AzureAISearch:ApiKey"];
 var azureAISearchEndpoint = builder.Configuration["AzureAISearch:Endpoint"];
