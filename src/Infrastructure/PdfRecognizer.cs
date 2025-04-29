@@ -1,35 +1,31 @@
-﻿using BuildingBlocks.Application.Ports;
+﻿using Azure;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
+using BuildingBlocks.Application.Ports;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
 
 namespace Infrastructure
 {
     public class PdfRecognizer : IPdfRecognizer
     {
-        public Task<RecognizedDocument> Recognize(byte[] content)
+        private readonly string _endpoint;
+        private readonly string _apiKey;
+
+        public PdfRecognizer(string endpoint, string apiKey)
         {
-            throw new NotImplementedException();
-            /*
-            string endpoint = "<your-form-recognizer-endpoint>";
-        string apiKey = "<your-form-recognizer-key>";
-        string pdfPath = "sample.pdf"; // Replace with your PDF file path
+            _endpoint = endpoint;
+            _apiKey = apiKey;
+        }
 
-        var credential = new AzureKeyCredential(apiKey);
-        var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
-
-        using var stream = File.OpenRead(pdfPath);
-        var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
-        var result = operation.Value;
-
-        foreach (var page in result.Pages)
+        public async Task<RecognizedDocument> Recognize(byte[] content)
         {
-            Console.WriteLine($"Page {page.PageNumber}:");
-
-            foreach (var line in page.Lines)
-            {
-                Console.WriteLine(line.Content);
-            }
-        }
-        }
-            */
+            var client = new DocumentAnalysisClient(new Uri(_endpoint), new AzureKeyCredential(_apiKey));
+            using var stream = new MemoryStream(content);
+            var operationResult = await client.AnalyzeDocumentAsync(WaitUntil.Completed,"prebuilt-document", stream);
+            var result = operationResult.Value;           
+            var recognizedDocument = new RecognizedDocument(result.Pages.SelectMany(p => p.Lines.Select(l => l.Content)));
+            return recognizedDocument;
         }
     }
 }
