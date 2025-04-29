@@ -1,9 +1,9 @@
 apiVersion: v1
-data:
-  AzureAISearchEndpoint: url
-  DocumentAnalysisEndpoint: url
 kind: ConfigMap
 metadata:
   creationTimestamp: null
   name: azureai-cfg
   namespace: ai
+data:
+  AzureAISearchEndpoint: {{ .Values.azureAISearch.endpoint | quote }}
+  AzureAIDocumentAnalysisEndpoint: {{ .Values.azureAIDocumentAnlysis.endpoint | quote }}
