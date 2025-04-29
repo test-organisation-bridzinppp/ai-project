@@ -72,7 +72,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: azureai-cfg
-              key: AzureAiSearchEndpoint
+              key: AzureAISearchEndpoint
         - name: AzureAISearch__ApiKey
           valueFrom:
             secretKeyRef:
@@ -82,7 +82,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: azureai-cfg
-              key: AzureAiDocumentAnalysisEndpoint
+              key: AzureAIDocumentAnalysisEndpoint
         - name: AzureAIDocumentAnalysis__ApiKey        
           valueFrom:
             secretKeyRef:
