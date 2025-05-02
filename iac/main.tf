@@ -12,6 +12,31 @@ provider "azurerm" {
   features {}
 }
 
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_key_vault" "ai-vault" {
+  name                        = "keyvault-ai-2"
+  location                    = azurerm_resource_group.ai-rg.location
+  resource_group_name         = azurerm_resource_group.ai-rg.name
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name                    = "standard"
+  soft_delete_retention_days  = 7
+  purge_protection_enabled    = false
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    secret_permissions = [
+      "Set",
+      "Get",
+      "List",
+      "Delete",
+    ]
+  }
+}
+
 resource "azurerm_resource_group" "ai-rg" {
   name     = var.rg-name
   location = var.location
@@ -57,7 +82,8 @@ module "ai-search" {
   depends_on = [ azurerm_resource_group.ai-rg ]
   source = "./modules/ai-search"
   resource_group_name = var.rg-name
-  location = var.location  
+  location = var.location
+  key_vault_id = azurerm_key_vault.ai-vault.id  
 }
 
 module "ai-document" {
@@ -66,3 +92,4 @@ module "ai-document" {
   resource_group_name = var.rg-name
   location = var.location  
 }
+
