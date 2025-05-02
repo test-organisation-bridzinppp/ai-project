@@ -4,6 +4,18 @@ namespace Infrastructure
 {
     public class Storage : IStorage
     {
+        public void DeleteFile(string path, IEnumerable<string> files)
+        {
+            foreach (var file in files)
+            {
+                var filePath = Path.Combine(path, file);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
+        
         public Task<StorageFile> GetFile(string path, string fileName)
         {
             using var fs = File.Open(path, FileMode.Open, FileAccess.Read);
