@@ -16,25 +16,43 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "ai-vault" {
-  name                        = "keyvault-ai-2"
+  depends_on = [ azurerm_kubernetes_cluster.ai-rg ]
+  name                        = "keyvault-ai"
   location                    = azurerm_resource_group.ai-rg.location
   resource_group_name         = azurerm_resource_group.ai-rg.name
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = "standard"
-  soft_delete_retention_days  = 7
+  soft_delete_retention_days  = 1
   purge_protection_enabled    = false
+  public_network_access_enabled = true
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+  access_policy = [
+    {
+      tenant_id = data.azurerm_client_config.current.tenant_id
+      object_id = data.azurerm_client_config.current.object_id
 
-    secret_permissions = [
-      "Set",
-      "Get",
-      "List",
-      "Delete",
-    ]
-  }
+      secret_permissions = [
+        "Set",
+        "Get",
+        "List",
+        "Delete",
+      ]
+    },
+    {
+      application_id = ""
+      certificate_permissions = []
+      tenant_id = data.azurerm_client_config.current.tenant_id
+      object_id = data.azurerm_kubernetes_cluster.ai-aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+      key_permissions = [
+        "Get",
+      ]
+      secret_permissions = [
+        "Get",
+      ]
+      storage_permissions = [
+        "Get",
+      ]
+    }]
 }
 
 resource "azurerm_resource_group" "ai-rg" {
