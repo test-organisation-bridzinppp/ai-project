@@ -91,7 +91,7 @@ spec:
         name: ai-api        
         volumeMounts:
         - name: ai-storage
-          mountPath: /mnt/ai-storage
+          mountPath: /documents
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true

@@ -37,6 +37,8 @@ namespace Application.EmbeddingsComputing
                 await _vectorDatabase.SaveDocument(embedding.PageContent, embedding.Page.ToString(), embedding.Vectors.ToArray());
             }
 
+            _storage.DeleteFile(Path.Combine("documents"), files);
+
             return files.Count();
         }
     }
