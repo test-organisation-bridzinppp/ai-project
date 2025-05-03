@@ -15,45 +15,6 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault" "ai-vault" {
-  depends_on = [ azurerm_kubernetes_cluster.ai-rg ]
-  name                        = "keyvault-ai"
-  location                    = azurerm_resource_group.ai-rg.location
-  resource_group_name         = azurerm_resource_group.ai-rg.name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  sku_name                    = "standard"
-  soft_delete_retention_days  = 1
-  purge_protection_enabled    = false
-  public_network_access_enabled = true
-
-  access_policy = [
-    {
-      tenant_id = data.azurerm_client_config.current.tenant_id
-      object_id = data.azurerm_client_config.current.object_id
-
-      secret_permissions = [
-        "Set",
-        "Get",
-        "List",
-        "Delete",
-      ]
-    },
-    {
-      application_id = ""
-      certificate_permissions = []
-      tenant_id = data.azurerm_client_config.current.tenant_id
-      object_id = data.azurerm_kubernetes_cluster.ai-aks.key_vault_secrets_provider[0].secret_identity[0].object_id
-      key_permissions = [
-        "Get",
-      ]
-      secret_permissions = [
-        "Get",
-      ]
-      storage_permissions = [
-        "Get",
-      ]
-    }]
-}
 
 resource "azurerm_resource_group" "ai-rg" {
   name     = var.rg-name
@@ -72,6 +33,12 @@ module "aks" {
   source = "./modules/aks"
   resource_group_name = var.rg-name
   location = var.location  
+}
+
+data "azurerm_kubernetes_cluster" "ai-aks" {
+  depends_on = [ module.aks ]
+  name                = "ai-aks-cluster"
+  resource_group_name = var.rg-name
 }
 
 module "ai-openai" {
@@ -111,3 +78,37 @@ module "ai-document" {
   location = var.location  
 }
 
+resource "azurerm_key_vault" "ai-vault" {
+  name                        = "keyvault-ai-pb-1980"
+  location                    = azurerm_resource_group.ai-rg.location
+  resource_group_name         = azurerm_resource_group.ai-rg.name
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  sku_name                    = "standard"
+  soft_delete_retention_days  = 7
+  purge_protection_enabled    = false
+  public_network_access_enabled = true  
+}
+
+resource "azurerm_key_vault_access_policy" "ai-vault-access" {
+  key_vault_id = azurerm_key_vault.ai-vault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_kubernetes_cluster.ai-aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+
+  secret_permissions = [
+    "Get",
+    "List"
+  ]
+}
+
+resource "azurerm_key_vault_access_policy" "principal-access" {
+  key_vault_id = azurerm_key_vault.ai-vault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete"
+  ]
+}

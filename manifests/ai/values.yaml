@@ -1,6 +1,6 @@
 aiapi:
   replicaCount: 1
-  image: bridzinppp/ai-api:0.0.8
+  image: bridzinppp/ai-api:0.0.9
 worker:
 
 azure:
@@ -10,16 +10,16 @@ openai:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
   model: "gpt-4o-mini"
   deploymentname: "openai-deployment"
-  apiKey: ""
+  apiKey: "fake-key"
 openaiembeddings:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
   model: "text-embedding-ada-002"
   deploymentname: "openai-text-embedding"
-  apiKey: ""
+  apiKey: "fake-key"
 azureAIDocumentAnlysis:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
-  apiKey: ""
+  apiKey: "fake-key"
 azureAISearch:
   endpoint: "https://eastus.api.cognitive.microsoft.com/"
-  apiKey: ""
+  apiKey: "fake-key"
 
