@@ -1,0 +1,24 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: kv-secrets
+spec:
+  provider: azure
+  secretObjects:
+    - data:
+        - key: ai-search-key
+          objectName: ai-search-key
+      type: Opaque
+      secretName: kv-secrets
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"               # <-- to dla SystemAssigned
+    userAssignedIdentityID: ""                 # <-- puste, bo SystemAssigned
+    keyvaultName: keyvault-ai-pb-1980
+    cloudName: ""                              # opcjonalne, np. AzurePublicCloud
+    objects: |
+      array:
+        - objectName: ai-search-key
+          objectType: secret
+    tenantId: ce8f5482-4f69-4258-8ea3-9ddb0a43aa5b
+    syncSecret: "true"                       # <-- to jest domyślne, więc można pominąć

@@ -71,6 +71,12 @@ module "ai-search" {
   key_vault_id = azurerm_key_vault.ai-vault.id  
 }
 
+data "azurerm_search_service" "ai-search" {  
+  depends_on = [ module.ai-search ]
+  name                = "ai-search-pb1980"
+  resource_group_name = var.rg-name
+}
+
 module "ai-document" {
   depends_on = [ azurerm_resource_group.ai-rg ]
   source = "./modules/ai-document"
@@ -92,12 +98,18 @@ resource "azurerm_key_vault" "ai-vault" {
 resource "azurerm_key_vault_access_policy" "ai-vault-access" {
   key_vault_id = azurerm_key_vault.ai-vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_kubernetes_cluster.ai-aks.key_vault_secrets_provider[0].secret_identity[0].object_id
+  object_id    = data.azurerm_kubernetes_cluster.ai-aks.identity[0].principal_id
 
   secret_permissions = [
     "Get",
     "List"
   ]
+}
+
+resource "azurerm_key_vault_secret" "query_key" {
+  name         = "ai-search-key"
+  value        = data.azurerm_search_service.ai-search.primary_key
+  key_vault_id = azurerm_key_vault.ai-vault.id
 }
 
 resource "azurerm_key_vault_access_policy" "principal-access" {
