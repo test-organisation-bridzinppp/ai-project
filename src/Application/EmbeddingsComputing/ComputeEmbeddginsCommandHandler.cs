@@ -16,11 +16,11 @@ namespace Application.EmbeddingsComputing
         public async Task<int> Handle(ComputeEmbeddingsCommand request, CancellationToken cancellationToken)
         {
             var embeddings = new List<Embedding>();
-            var files = await _storage.GetFilesNames(Path.Combine("documents"), "pdf");
+            var files = await _storage.GetFilesNames("/documents", "pdf");
             
             foreach (var file in files)
             {
-                var storageFile = await _storage.GetFile(Path.Combine("documents"), file);
+                var storageFile = await _storage.GetFile("/documents", file);
                 var recognizedDocument = await _pdfRecognizer.Recognize(storageFile.Content);
                 int pageNo = 0;
 
@@ -37,7 +37,7 @@ namespace Application.EmbeddingsComputing
                 await _vectorDatabase.SaveDocument(embedding.PageContent, embedding.Page.ToString(), embedding.Vectors.ToArray());
             }
 
-            _storage.DeleteFile(Path.Combine("documents"), files);
+            _storage.DeleteFile("/documents", files);
 
             return files.Count();
         }

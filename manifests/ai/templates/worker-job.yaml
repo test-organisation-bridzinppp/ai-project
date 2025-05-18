@@ -16,7 +16,8 @@ spec:
         metadata:                  
         spec: 
           containers:
-          - name: worker-job        
+          - name: worker-job   
+            image: bridzinppp/worker-job  
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
