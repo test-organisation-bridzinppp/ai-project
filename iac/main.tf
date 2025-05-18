@@ -75,9 +75,16 @@ data "azurerm_search_service" "ai-search" {
   resource_group_name = var.rg-name
 }
 
+data "azurerm_search_service" "ai-search" {  
+  depends_on = [ module.ai-search ]
+  name                = "ai-search-pb1980"
+  resource_group_name = var.rg-name
+}
+
 module "ai-document" {
   depends_on = [ azurerm_resource_group.ai-rg ]
   source = "./modules/ai-document"
   resource_group_name = var.rg-name
-  location = var.location  
+  location = var.location
 }
+

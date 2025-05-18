@@ -17,33 +17,19 @@ spec:
         spec: 
           volumes:
           - name: secrets-store-inline
+
             csi:
               driver: secrets-store.csi.k8s.io
               readOnly: true
               volumeAttributes:
                 secretProviderClass: "kv-secrets"
-          # volumes:
-          # - name: ai-storage
-          #   persistentVolumeClaim:
-          #     claimName: ai-storage-pvc
-          serviceAccountName: worker-job-sa
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            runAsNonRoot: true
-          containers:
-          - image: bridzinppp/worker-job:0.0.10
-            name: worker-job
-            env:
-            - name: aisearchkey
-              valueFrom:
-                secretKeyRef:
-                  name: kv-secrets
-                  key: ai-search-key
+
+
             volumeMounts:
             - name: secrets-store-inline
               mountPath: /mnt/secrets
+
+   
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

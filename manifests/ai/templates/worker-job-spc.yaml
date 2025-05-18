@@ -23,3 +23,4 @@ spec:
         - |
           objectName: ai-search-key
           objectType: secret
+

@@ -6,6 +6,7 @@ namespace worker_job
     class Program
     {
         static async Task Main(string[] args)
+
         //{
         //    // Replace with your Key Vault URL and secret name
         //    //string keyVaultUrl = "https://keyvault-ai-pb-1980.vault.azure.net/";
