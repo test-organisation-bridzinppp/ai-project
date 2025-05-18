@@ -35,11 +35,11 @@ public class ComputeEmbeddginsCommandHandlerTests
         
         var embeddings = new List<float> { 0.1f, 0.2f, 0.3f };
 
-        _storageMock.Setup(s => s.GetFilesNames("documents", "pdf"))
+        _storageMock.Setup(s => s.GetFilesNames("/documents", "pdf"))
             .ReturnsAsync(files);
-        _storageMock.Setup(s => s.GetFile("documents", "file1.pdf"))
+        _storageMock.Setup(s => s.GetFile("/documents", "file1.pdf"))
             .ReturnsAsync(new StorageFile("file1.pdf", new byte[0]));
-        _storageMock.Setup(s => s.GetFile("documents", "file2.pdf"))
+        _storageMock.Setup(s => s.GetFile("/documents", "file2.pdf"))
             .ReturnsAsync(new StorageFile("file2.pdf", new byte[0]));
         _pdfRecognizerMock.Setup(p => p.Recognize(It.IsAny<byte[]>()))
             .ReturnsAsync(recognizedDocument);
@@ -53,8 +53,8 @@ public class ComputeEmbeddginsCommandHandlerTests
 
         // Assert
         Assert.Equal(2, result);
-        _storageMock.Verify(s => s.GetFilesNames("documents", "pdf"), Times.Once);
-        _storageMock.Verify(s => s.GetFile("documents", It.IsAny<string>()), Times.Exactly(2));
+        _storageMock.Verify(s => s.GetFilesNames("/documents", "pdf"), Times.Once);
+        _storageMock.Verify(s => s.GetFile("/documents", It.IsAny<string>()), Times.Exactly(2));
         _pdfRecognizerMock.Verify(p => p.Recognize(It.IsAny<byte[]>()), Times.Exactly(2));
         _textEmbeddingsProviderMock.Verify(t => t.GetEmbeddings(It.IsAny<string>()), Times.Exactly(4));
     }

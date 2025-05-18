@@ -1,6 +1,6 @@
 aiapi:
   replicaCount: 1
-  image: bridzinppp/ai-api:0.0.10
+  image: bridzinppp/ai-api:0.0.12
 worker:
 
 azure:
