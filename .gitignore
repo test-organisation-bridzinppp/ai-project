@@ -441,3 +441,6 @@ override.tf.json
 
 # Ignore directories created by Terraform
 .terraform/
+
+# values-secret.yaml
+values-*.yaml
