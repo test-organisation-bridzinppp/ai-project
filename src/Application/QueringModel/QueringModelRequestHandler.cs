@@ -24,13 +24,14 @@ namespace Application.QueringModel
             var embedding = await _textEmbeddingsProvider.GetEmbeddings(query);
             var vectorSearchResults = await _vectorDatabase.VectorSearch(embedding);
             var sb = new StringBuilder();
-            
-            foreach(var document in vectorSearchResults.Take(3))
+            sb.AppendLine("## Query:\n" +query);
+            sb.AppendLine("## Context:\n");
+            foreach (var document in vectorSearchResults.Take(3))
             {
                 sb.Append(document);
             }
             var prompt = sb.ToString();
-            await _chatCompletionProvider.SetNewContext("You are a helpful assistant. Answer the question based on the context provided.");
+            await _chatCompletionProvider.SetNewContext("# You are a helpful assistant. Answer the question based on the context provided.");
             return await _chatCompletionProvider.CompleteChatAsync(prompt);
         }
     }

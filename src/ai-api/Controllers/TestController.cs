@@ -1,5 +1,7 @@
 ﻿using Application.Completions;
 using Application.Embeddings;
+using Application.EmbeddingsComputing;
+using Application.QueringModel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,20 @@ namespace ai_api.Controllers
         public async Task<IActionResult> GetEmbeddings(string text)
         {
             var response = await _mediator.Send(new TextEmbeddingQuery(text));
+            return Ok(response);
+        }
+
+        [HttpPost("/embeddings")]
+        public async Task<ActionResult> GenerateEmbeddings()
+        {
+            var response = await _mediator.Send(new ComputeEmbeddingsCommand());
+            return Ok(response);
+        }
+
+        [HttpGet("/rag-resources")]
+        public async Task<IActionResult> Get(string prompt)
+        {
+            var response = await _mediator.Send(new QueringModelRequest(prompt));
             return Ok(response);
         }
     }
