@@ -15,21 +15,8 @@ spec:
       template:
         metadata:                  
         spec: 
-          volumes:
-          - name: secrets-store-inline
-
-            csi:
-              driver: secrets-store.csi.k8s.io
-              readOnly: true
-              volumeAttributes:
-                secretProviderClass: "kv-secrets"
-
-
-            volumeMounts:
-            - name: secrets-store-inline
-              mountPath: /mnt/secrets
-
-   
+          containers:
+          - name: worker-job        
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
