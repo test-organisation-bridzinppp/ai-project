@@ -1,3 +1,9 @@
+resource "azurerm_user_assigned_identity" "aks_identity" {
+  name                = "aks-uami"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
 resource "azurerm_kubernetes_cluster" "ai-aks" {
     name                = "ai-aks-cluster"
   location            = var.location
@@ -11,8 +17,10 @@ resource "azurerm_kubernetes_cluster" "ai-aks" {
   }
 
   identity {
-    type = "SystemAssigned"
-  }
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.aks_identity.id]
+    }
+  
 
   key_vault_secrets_provider {
     secret_rotation_enabled = true
@@ -23,3 +31,6 @@ resource "azurerm_kubernetes_cluster" "ai-aks" {
     Content     = "AI"
   }
 }
+
+
+

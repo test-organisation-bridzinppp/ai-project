@@ -17,11 +17,11 @@ spec:
         spec: 
           volumes:
           - name: secrets-store-inline
-              csi:
-                driver: secrets-store.csi.k8s.io
-                readOnly: true
-                volumeAttributes:
-                  secretProviderClass: "kv-secrets"
+            csi:
+              driver: secrets-store.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: "kv-secrets"
           # volumes:
           # - name: ai-storage
           #   persistentVolumeClaim:
@@ -41,9 +41,9 @@ spec:
                 secretKeyRef:
                   name: kv-secrets
                   key: ai-search-key
-            # volumeMounts:
-            # - name: ai-storage
-            #   mountPath: /documents
+            volumeMounts:
+            - name: secrets-store-inline
+              mountPath: /mnt/secrets
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

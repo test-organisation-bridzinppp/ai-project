@@ -29,7 +29,6 @@ module "storage" {
 }
 
 module "aks" {
-  depends_on = [ module.storage ]
   source = "./modules/aks"
   resource_group_name = var.rg-name
   location = var.location  
@@ -68,7 +67,6 @@ module "ai-search" {
   source = "./modules/ai-search"
   resource_group_name = var.rg-name
   location = var.location
-  key_vault_id = azurerm_key_vault.ai-vault.id  
 }
 
 data "azurerm_search_service" "ai-search" {  
@@ -82,45 +80,4 @@ module "ai-document" {
   source = "./modules/ai-document"
   resource_group_name = var.rg-name
   location = var.location  
-}
-
-resource "azurerm_key_vault" "ai-vault" {
-  name                        = "keyvault-ai-pb-1980"
-  location                    = azurerm_resource_group.ai-rg.location
-  resource_group_name         = azurerm_resource_group.ai-rg.name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  sku_name                    = "standard"
-  soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
-  public_network_access_enabled = true  
-}
-
-resource "azurerm_key_vault_access_policy" "ai-vault-access" {
-  key_vault_id = azurerm_key_vault.ai-vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_kubernetes_cluster.ai-aks.identity[0].principal_id
-
-  secret_permissions = [
-    "Get",
-    "List"
-  ]
-}
-
-resource "azurerm_key_vault_secret" "query_key" {
-  name         = "ai-search-key"
-  value        = data.azurerm_search_service.ai-search.primary_key
-  key_vault_id = azurerm_key_vault.ai-vault.id
-}
-
-resource "azurerm_key_vault_access_policy" "principal-access" {
-  key_vault_id = azurerm_key_vault.ai-vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
-
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete"
-  ]
 }
