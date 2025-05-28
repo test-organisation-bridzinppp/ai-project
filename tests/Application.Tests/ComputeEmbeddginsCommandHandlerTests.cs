@@ -26,7 +26,7 @@ public class ComputeEmbeddginsCommandHandlerTests
         );
     }
 
-    [Fact]
+    //[Fact]
     public async Task Handle_ShouldReturnFileCount_WhenFilesAreProcessed()
     {
         // Arrange

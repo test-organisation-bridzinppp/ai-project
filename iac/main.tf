@@ -12,10 +12,6 @@ provider "azurerm" {
   features {}
 }
 
-
-data "azurerm_client_config" "current" {}
-
-
 resource "azurerm_resource_group" "ai-rg" {
   name     = var.rg-name
   location = var.location
@@ -29,15 +25,10 @@ module "storage" {
 }
 
 module "aks" {
+  depends_on = [ azurerm_resource_group.ai-rg ]
   source = "./modules/aks"
   resource_group_name = var.rg-name
   location = var.location  
-}
-
-data "azurerm_kubernetes_cluster" "ai-aks" {
-  depends_on = [ module.aks ]
-  name                = "ai-aks-cluster"
-  resource_group_name = var.rg-name
 }
 
 module "ai-openai" {
@@ -67,18 +58,6 @@ module "ai-search" {
   source = "./modules/ai-search"
   resource_group_name = var.rg-name
   location = var.location
-}
-
-data "azurerm_search_service" "ai-search" {  
-  depends_on = [ module.ai-search ]
-  name                = "ai-search-pb1980"
-  resource_group_name = var.rg-name
-}
-
-data "azurerm_search_service" "ai-search" {  
-  depends_on = [ module.ai-search ]
-  name                = "ai-search-pb1980"
-  resource_group_name = var.rg-name
 }
 
 module "ai-document" {
