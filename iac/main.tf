@@ -12,8 +12,6 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_client_config" "current" {}
-
 resource "azurerm_resource_group" "ai-rg" {
   name     = var.rg-name
   location = var.location
@@ -31,12 +29,6 @@ module "aks" {
   source = "./modules/aks"
   resource_group_name = var.rg-name
   location = var.location  
-}
-
-data "azurerm_kubernetes_cluster" "ai-aks" {
-  depends_on = [ azurerm_resource_group.ai-rg ]
-  name                = "ai-aks-cluster"
-  resource_group_name = var.rg-name
 }
 
 module "ai-openai" {
